@@ -29,28 +29,28 @@ function SuggestionSection() {
   };
 
   return (
-    <div className="bg-white h-max mt-10 lg:p-14 p-8">
+    <div className="bg-white mt-10 lg:p-14 p-8">
       <div>
         <div className="text-[#202020] text-2xl font-semibold">
           You May Also Like
         </div>
 
-        <div className="relative mt-4 flex justify-between">
+        <div className="relative mt-4 flex justify-between items-center">
           <button
-            className="absolute left-0 mt-20 z-10 bg-white rounded-full p-2 shadow-md"
+            className="absolute left-0 z-10 bg-white rounded-full p-2 shadow-md hidden md:block"
             onClick={handlePrevClick}
           >
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
 
-          <div className="flex w-full justify-between">
+          <div className="flex w-full overflow-x-auto md:overflow-visible justify-between space-x-4">
             {(cryptoData as any[]).slice(startIndex, startIndex + 5).map((crypto, index) => (
               <CryptoCard key={index} cryptoData={crypto.item} />
             ))}
           </div>
- 
+
           <button
-            className="absolute right-0 mt-20 z-10 bg-white rounded-full p-2 shadow-md"
+            className="absolute right-0 z-10 bg-white rounded-full p-2 shadow-md hidden md:block"
             onClick={handleNextClick}
           >
             <FontAwesomeIcon icon={faChevronRight} />
@@ -60,7 +60,7 @@ function SuggestionSection() {
         <div className="text-[#202020] text-2xl font-semibold mt-6">
           Trending Coins
         </div>
-        <div className="mt-4 flex justify-between overflow-x-auto">
+        <div className="mt-4 flex flex-wrap justify-between gap-4">
           {(cryptoData as any[]).slice(1, 6).map((crypto, index) => (
             <CryptoCard key={index} cryptoData={crypto.item} />
           ))}
@@ -72,7 +72,7 @@ function SuggestionSection() {
 
 function CryptoCard({ cryptoData }: any) {
   return (
-    <div className="lg:w-[300px] rounded-2xl p-5 border-2 my-2 mr-2">
+    <div className="lg:w-[300px] md:w-[250px] sm:w-[200px] w-full rounded-2xl p-5 border-2 my-2">
       <div className="flex items-center space-x-2">
         <img
           src={cryptoData.large}
