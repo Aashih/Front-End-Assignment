@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import TradingViewWidget from "./TradingViewWidget";
 import img from "../assets/btc.png";
 
@@ -16,18 +15,33 @@ function Crypto(): JSX.Element {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<{
-          bitcoin: CryptoData;
-        }>(
-          "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=inr%2Cusd&include_24hr_change=true"
-        );
-        setCryptoData(response.data.bitcoin);
-      } catch (error) {}
+        const url =
+          'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=inr%2Cusd&include_market_cap=false&include_24hr_change=true&include_last_updated_at=true';
+        const options = {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+            'x-cg-demo-api-key': 'CG-zkEe5LnRCmgLziw4a4rb2KCY',
+          },
+        };
+
+        const response = await fetch(url, options);
+        const json = await response.json();
+        setCryptoData({
+          usd: json.bitcoin.usd,
+          usd_24h_change: json.bitcoin.usd_24h_change,
+          inr: json.bitcoin.inr,
+          inr_24h_change: json.bitcoin.inr_24h_change,
+        });
+        console.log("HERE IS Response DATA-!!-> ", json);
+      } catch (error) {
+        console.error("Error fetching crypto data:", error);
+      }
     };
 
     fetchData();
 
-    const interval = setInterval(fetchData, 1000);
+    const interval = setInterval(fetchData, 10000);  // Refresh every minute
 
     return () => clearInterval(interval);
   }, []);
