@@ -5,7 +5,8 @@ import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons
 
 function SuggestionSection() {
   const [cryptoData, setCryptoData] = useState<any[]>([]);
-  const [startIndex, setStartIndex] = useState<number>(0);
+  const [startIndex, setStartIndex] = useState<number>(0); // For "You May Also Like"
+  const [trendingIndex, setTrendingIndex] = useState<number>(0); // For "Trending Coins"
 
   useEffect(() => {
     axios
@@ -18,14 +19,24 @@ function SuggestionSection() {
       });
   }, []);
 
-  // Handle previous button click
+  // Handle previous button click for "You May Also Like"
   const handlePrevClick = () => {
     setStartIndex((prev) => (prev - 5 >= 0 ? prev - 5 : 0));
   };
 
-  // Handle next button click
+  // Handle next button click for "You May Also Like"
   const handleNextClick = () => {
     setStartIndex((prev) => (prev + 5 < cryptoData.length ? prev + 5 : prev));
+  };
+
+  // Handle previous button click for "Trending Coins"
+  const handlePrevTrendingClick = () => {
+    setTrendingIndex((prev) => (prev - 5 >= 0 ? prev - 5 : 0));
+  };
+
+  // Handle next button click for "Trending Coins"
+  const handleNextTrendingClick = () => {
+    setTrendingIndex((prev) => (prev + 5 < cryptoData.length ? prev + 5 : prev));
   };
 
   return (
@@ -43,7 +54,7 @@ function SuggestionSection() {
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
 
-          <div className="flex w-full overflow-x-auto md:overflow-visible justify-between space-x-4">
+          <div className="flex w-full overflow-x-auto justify-start space-x-2">
             {(cryptoData as any[]).slice(startIndex, startIndex + 5).map((crypto, index) => (
               <CryptoCard key={index} cryptoData={crypto.item} />
             ))}
@@ -60,10 +71,26 @@ function SuggestionSection() {
         <div className="text-[#202020] text-2xl font-semibold mt-6">
           Trending Coins
         </div>
-        <div className="mt-4 flex flex-wrap justify-between gap-4">
-          {(cryptoData as any[]).slice(1, 6).map((crypto, index) => (
-            <CryptoCard key={index} cryptoData={crypto.item} />
-          ))}
+        <div className="relative mt-4 flex justify-between items-center">
+          <button
+            className="absolute left-0 z-10 bg-white rounded-full p-2 shadow-md hidden md:block"
+            onClick={handlePrevTrendingClick}
+          >
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </button>
+
+          <div className="flex w-full overflow-x-auto justify-start space-x-2">
+            {(cryptoData as any[]).slice(trendingIndex, trendingIndex + 5).reverse().map((crypto, index) => (
+              <CryptoCard key={index} cryptoData={crypto.item} />
+            ))}
+          </div>
+
+          <button
+            className="absolute right-0 z-10 bg-white rounded-full p-2 shadow-md hidden md:block"
+            onClick={handleNextTrendingClick}
+          >
+            <FontAwesomeIcon icon={faChevronRight} />
+          </button>
         </div>
       </div>
     </div>
@@ -72,7 +99,7 @@ function SuggestionSection() {
 
 function CryptoCard({ cryptoData }: any) {
   return (
-    <div className="lg:w-[300px] md:w-[250px] sm:w-[200px] w-full rounded-2xl p-5 border-2 my-2">
+    <div className="lg:w-[300px] md:w-[250px] sm:w-[200px] w-[230px] rounded-2xl p-5 border-2 my-2">
       <div className="flex items-center space-x-2">
         <img
           src={cryptoData.large}
