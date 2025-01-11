@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 function SuggestionSection() {
-  const [cryptoData, setCryptoData] = useState([]);
-  const [startIndex, setStartIndex] = useState(0);
+  const [cryptoData, setCryptoData] = useState<any[]>([]);
+  const [startIndex, setStartIndex] = useState<number>(0);
 
   useEffect(() => {
     axios
@@ -18,10 +18,12 @@ function SuggestionSection() {
       });
   }, []);
 
+  // Handle previous button click
   const handlePrevClick = () => {
     setStartIndex((prev) => (prev - 5 >= 0 ? prev - 5 : 0));
   };
 
+  // Handle next button click
   const handleNextClick = () => {
     setStartIndex((prev) => (prev + 5 < cryptoData.length ? prev + 5 : prev));
   };
@@ -33,16 +35,24 @@ function SuggestionSection() {
           You May Also Like
         </div>
 
-        <div className="relative flex items-center">
-          <button onClick={handlePrevClick} className="absolute left-0 z-10 bg-white rounded-full p-2 shadow-md">
+        <div className="relative mt-4 flex justify-between">
+          <button
+            className="absolute left-0 mt-20 z-10 bg-white rounded-full p-2 shadow-md"
+            onClick={handlePrevClick}
+          >
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
-          <div className="flex justify-between overflow-hidden w-full">
-            {cryptoData.slice(startIndex, startIndex + 5).map((crypto, index) => (
+
+          <div className="flex w-full justify-between">
+            {(cryptoData as any[]).slice(startIndex, startIndex + 5).map((crypto, index) => (
               <CryptoCard key={index} cryptoData={crypto.item} />
             ))}
           </div>
-          <button onClick={handleNextClick} className="absolute right-0 z-10 bg-white rounded-full p-2 shadow-md">
+
+          <button
+            className="absolute right-0 mt-20 z-10 bg-white rounded-full p-2 shadow-md"
+            onClick={handleNextClick}
+          >
             <FontAwesomeIcon icon={faChevronRight} />
           </button>
         </div>
@@ -51,7 +61,7 @@ function SuggestionSection() {
           Trending Coins
         </div>
         <div className="mt-4 flex justify-between overflow-x-auto">
-          {cryptoData.slice(1, 6).map((crypto, index) => (
+          {(cryptoData as any[]).slice(1, 6).map((crypto, index) => (
             <CryptoCard key={index} cryptoData={crypto.item} />
           ))}
         </div>
@@ -60,7 +70,7 @@ function SuggestionSection() {
   );
 }
 
-function CryptoCard({ cryptoData }) {
+function CryptoCard({ cryptoData }: any) {
   return (
     <div className="lg:w-[300px] rounded-2xl p-5 border-2 my-2 mr-2">
       <div className="flex items-center space-x-2">
@@ -72,28 +82,29 @@ function CryptoCard({ cryptoData }) {
         <span className="text-[16px] font-normal">{cryptoData.name}</span>
         <span
           className={`text-${
-            cryptoData.data?.price_change_percentage_24h?.usd > 0
+            cryptoData.data.price_change_percentage_24h.usd > 0
               ? "green"
               : "red"
           }-500 bg-${
-            cryptoData.data?.price_change_percentage_24h?.usd > 0
+            cryptoData.data.price_change_percentage_24h.usd > 0
               ? "#0AB27D"
               : "#FF0000"
           }/10 text-xs font-normal pr-10`}
         >
-          {cryptoData.data?.price_change_percentage_24h?.usd?.toFixed(2)}%
+          {cryptoData.data.price_change_percentage_24h.usd.toFixed(2)}%
         </span>
       </div>
       <div className="text-xl text-[#171717] font-medium mt-2">
         {cryptoData.data.price}
       </div>
+
       <img
         src={
           cryptoData && cryptoData.data.sparkline
             ? cryptoData.data.sparkline
             : "https://www.coingecko.com/coins/33566/sparkline.svg"
         }
-        alt={cryptoData.name}
+        alt={cryptoData && cryptoData.name ? cryptoData.name : ""}
         className="w-full h-20"
       />
     </div>
