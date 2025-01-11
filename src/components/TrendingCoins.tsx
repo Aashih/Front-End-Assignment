@@ -10,7 +10,7 @@ interface CoinProps {
 
 function TrendingCoins() {
   const [coinsData, setCoinsData] = useState<CoinProps[]>([]); // Define the type for coinsData
-
+ 
   useEffect(() => {
     const fetchCoinData = async () => {
       try {

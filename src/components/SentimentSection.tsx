@@ -16,7 +16,7 @@ function SentimentSection() {
           <div className="lg:w-[456px]  bg-[#E8F4FD] h-[204px] rounded-xl overflow-y-hidden">
             <div className="p-4 flex">
               <div className="bg-[#0082FF] w-11 h-11 rounded-full justify-center flex items-center">
-                <svg
+                <svg 
                   width="24"
                   height="19"
                   viewBox="0 0 24 19"

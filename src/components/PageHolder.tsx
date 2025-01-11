@@ -12,7 +12,7 @@ function PageHolder() {
         </div>
       </div>
     )
-  }
+  } 
   
   export default PageHolder;
   

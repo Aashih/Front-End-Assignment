@@ -17,7 +17,7 @@ function TradingViewWidget() {
       "timezone": "Etc/UTC",
       "theme": "light",
       "style": "2",
-      "locale": "en",
+      "locale": "en", 
       "enable_publishing": false,
       "hide_top_toolbar": true,
       "hide_legend": true,

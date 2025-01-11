@@ -16,7 +16,7 @@ function TeamCard() {
             name="John Smith"
             des="Designation here"
             link={john}
-          />
+          /> 
           <Card
             name="Elina Williams"
             des="Designation here"

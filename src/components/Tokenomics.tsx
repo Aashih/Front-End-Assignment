@@ -14,7 +14,7 @@ function Tokenomics() {
               viewBox="0 0 179 180"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-            >
+            > 
               <circle
                 cx="89.5"
                 cy="89.7969"

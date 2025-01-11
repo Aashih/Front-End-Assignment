@@ -23,7 +23,7 @@ function Crypto(): JSX.Element {
             accept: 'application/json',
             'x-cg-demo-api-key': 'CG-zkEe5LnRCmgLziw4a4rb2KCY',
           },
-        };
+        }; 
 
         const response = await fetch(url, options);
         const json = await response.json();

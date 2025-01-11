@@ -48,7 +48,7 @@ function SuggestionSection() {
               <CryptoCard key={index} cryptoData={crypto.item} />
             ))}
           </div>
-
+ 
           <button
             className="absolute right-0 mt-20 z-10 bg-white rounded-full p-2 shadow-md"
             onClick={handleNextClick}

@@ -7,7 +7,7 @@ function About() {
       <div>
         <div className="text-2xl font-semibold text-[#0F1629]">
           About Bitcoin
-        </div>
+        </div>  
         <div className="mt-6 ">
           <div className="text-lg font-bold text-[#0B1426]">
             What is Bitcoin?
